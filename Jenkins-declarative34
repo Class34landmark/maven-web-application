@@ -1,7 +1,7 @@
 pipeline{
-  agent any
-  //triggers   
+  agent any   
   //options{}
+  //triggers{}     
   tools {
     maven 'maven3.9.6'
   }
@@ -20,8 +20,8 @@ pipeline{
   }
     stage('3CodeQuality'){
     steps{
-          //sh "mvn sonar:sonar"
-          sh "echo CodeQualityAnalysis completed" 
+         // sh "mvn sonar:sonar" 
+          sh "echo CodeQualityAnalysis completed"
     }
   }
     stage('4UploadArtifacts'){
@@ -32,13 +32,13 @@ pipeline{
           sh "echo Build and release completed"
     }
   }
-    stage('5deploy2UAT'){
+  stage('5deploy2UAT'){
     steps{
           sh "echo Deployment is ready for the client review" 
           deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://10.0.0.38:8088/')], contextPath: null, war: 'target/*war  '
-
+       
     }
-  }  
+  } 
   stage('6manualApproval'){
     steps{
       sh "echo Review the application and confirm its performance within 5 hours"
@@ -53,7 +53,7 @@ pipeline{
           deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://10.0.0.38:8088/')], contextPath: null, war: 'target/*war  '
 
     }
-  }  
+  } 
   }
   post{
     always{
